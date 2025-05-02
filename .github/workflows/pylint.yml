@@ -21,11 +21,5 @@ jobs:
     - name: Analysing the code with pylint
       run: |
         pylint $(git ls-files '*.py')
-  options:
-    disable:
-      - missing-function-docstring:
-        - tests/
-      - protected-access:
-        - tests/
-      - too-many-public-methods:
-        - tests/
+      env:
+        PYLINT_OPTIONS: "--disable=missing-function-docstring:tests/,protected-access:tests/,too-many-public-methods:tests/"
