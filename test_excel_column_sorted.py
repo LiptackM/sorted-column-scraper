@@ -3,7 +3,7 @@ unit tests for excel_column_sorted.py functions
 
 notes:
     - requires a test_file & test_corrupt_file (see fixtures) in the same folder
-            as this test.  Note if you provide these, also change expected values below
+      as this test.  Note if you provide these, also change expected values below
     - test_corrupt-file is jsut a simple text file renamed to a xlsx so its corrupt
     - pytest.ini needs to know the root where these are,
         typically by adding "pythonpath = ."
@@ -59,9 +59,9 @@ def test_process_excel_columns_rw_no_such_file():
             'excel_column_sorted_test_nonexistent.xlsx', 'Test sheet'))
 
 
-# different sheet than the default: this often works because of default so lets make sure a switch is OK
+# different sheet than the default,
+#   this often works because of default so lets make sure a switch is OK
 def test_process_excel_columns_rw_different_sheet(test_file):
-    # pytest.skip("test_process_excel_columns_rw_different_sheet(): Not implemented yet")
     # get current sheet
     workbook = None
     filename = test_file
@@ -96,9 +96,9 @@ def test_process_excel_columns_rw_corrupted_xls(test_corrupt_file):
         list(process_excel_columns_rw(test_corrupt_file, 'Test sheet'))
 
 
-# ___remove_before_and_after()___________________________________________________
+# ___remove_before_and_after()_____________________________________________
 
-# positive tests of different types of possible cell contents returned from openpyxl
+# positive tests, different types of cell contents returned from openpyxl
 def test_remove_before_and_after_positive():
     my_list = [
         None,
@@ -124,7 +124,7 @@ def test_remove_before_and_after_positive():
     assert remove_before_and_after(my_list, "my Text", "foo") == []
 
 
-# negative tests of different types of possible cell contents returned from openpyxl
+# negative tests,different types of cell contents returned from openpyxl
 def test_remove_before_and_after_negative():
     my_list = [
         None,
@@ -150,7 +150,7 @@ def test_remove_before_and_after_empty_list():
     assert remove_before_and_after(my_list, "foo", "bar") == []
 
 
-# ___process_and_sort()___________________________________________________
+# ___process_and_sort()______________________________________________
 
 # positive test of process_and_sort, negative handled in other tests
 def test_process_and_sort(test_file):
@@ -181,7 +181,7 @@ def test_print_output_empty(capsys):
     assert captured.out == ""
 
 
-# ___parse_args()_____________________________________________________
+# ___parse_args()________________________________________________
 
 # exactly 5 valid arguments
 def test_parse_args_correct(test_file):
@@ -198,7 +198,10 @@ def test_parse_args_missing_arguments(test_file, capsys):
     argv = ["excel_column_sorted.py", test_file, "Test sheet"]
     result = parse_args(argv)
     captured = capsys.readouterr()
-    assert 'Usage: excel_column_sorted.py <full path to excel file> <"sheet name"> <"column title"> <"ending cell", use None if blank>' in captured.out
+    assert ("Usage: excel_column_sorted.py" +
+            " <full path to excel file> <'sheet name'>" +
+            " <'column title'> <'ending cell'," +
+            " use None if blank>") in captured.out
     assert result is None
 
 # more than 5 arguments
