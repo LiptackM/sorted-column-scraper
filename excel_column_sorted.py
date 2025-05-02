@@ -1,11 +1,11 @@
-
 r"""
 Gathers all the entries in a sheet, slices to get one or more consecutive columns,
     and then sorts by value.
     
- Usage: excel_column,py <full path to excel file> <"column title"> <"ending cell", use None if blank>'.
-    Most likely the last cell is blank, so "ending cell" should be None.
-    Use quote around Column title if more than one word to account for blank
+ Usage: excel_column,py <full path to excel file> <"column title"> <"ending cell",
+    use None if blank>'.  Most likely the last cell is blank, so "ending cell"
+    should be None.  Use quote around Column title if more than one word to
+    account for blank
     
 Args:
     
@@ -27,13 +27,18 @@ Tests
 """
 
 import sys
-from openpyxl import load_workbook
 from pathlib import Path
 
+from openpyxl import load_workbook
 
 def parse_args(argv):
+    """
+    takes args and returns new variables in a function, so easily testable with pylint
+    """
     if len(argv) < 5:
-        print('Usage: excel_column_sorted.py <full path to excel file> <"sheet name"> <"column title"> <"ending cell", use None if blank>')
+        print("Usage: excel_column_sorted.py" +
+              " <full path to excel file> <'sheet name'>" +
+              " <'column title'> <'ending cell', use None if blank>")
         return None
     initial_path = argv[1]
     sheet_name = argv[2]
@@ -44,6 +49,9 @@ def parse_args(argv):
 
 
 def print_output(items: list[any]) -> None:
+    """
+    separated out  printing to make main() just initial calls and I/) to make testable
+    """
     for item in items:
         print(f"{repr(item)} (type: {type(item).__name__})", end='\r\n')
 
@@ -110,7 +118,7 @@ def remove_before_and_after(my_list, front_target: str, back_target: str) -> lis
 
     except ValueError as value_error:
         print(value_error)
-        print(f"target not found in sheet")
+        print("target not found in sheet")
         return []  # target not found; return empty
 
 
@@ -143,9 +151,12 @@ def process_and_sort(path, column_title, ending_cell, sheet_name):
 
 
 def main():
+    """
+    basic I/O & function calls only
+    """
     final = []
 
-    args: Tuple[Path, str, str, str] = parse_args(sys.argv)
+    args: tuple[Path, str, str, str] = parse_args(sys.argv)
     if args is None:
         return None
     path, sheet_name, column_title, ending_cell = args
@@ -153,6 +164,8 @@ def main():
     final = process_and_sort(path, column_title, ending_cell, sheet_name)
 
     print_output(final)
+    
+    return None
 
 
 if __name__ == "__main__":
