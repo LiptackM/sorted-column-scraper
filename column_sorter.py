@@ -70,7 +70,7 @@ def process_excel_columns_rw(filename, sheet_name):
         sheet_to_activate = workbook[sheet_name]
         workbook.active = workbook.sheetnames.index(sheet_to_activate.title)
         sheet = workbook.active
- 
+
         if sheet:
             for col in sheet.iter_cols():
                 for cell in col:
@@ -78,8 +78,8 @@ def process_excel_columns_rw(filename, sheet_name):
     finally:
         if workbook:
             workbook.close()
-            
-            
+
+
 def remove_before_and_after(
     my_list,
     front_target: str,
@@ -114,16 +114,16 @@ def remove_before_and_after(
         #entering the same value is undefined so return empty list
         #if front_target == back_target:
             #return []
-        
+
         front_index = my_list.index(front_target)
         front_cut = my_list[front_index +1:]
-        
+
         back_index = front_cut.index(back_target)
-        
+
         trimmed = front_cut[:back_index]
-        
-        return trimmed  
-    
+
+        return trimmed
+
     except ValueError as value_error:
         print(value_error)
         print(f"target not found in sheet")
@@ -142,11 +142,11 @@ def process_and_sort(path, column_title, ending_cell, sheet_name):
     Return:  final list
     """
     initial_output, processed_list  = [], []
-    
-    #create new list 
+
+    #create new list
     for value in process_excel_columns_rw(path,sheet_name):
         initial_output.append(value)
-       
+
     #cut the list, then sort
     processed_list = remove_before_and_after(
         initial_output, column_title, ending_cell)
@@ -154,7 +154,7 @@ def process_and_sort(path, column_title, ending_cell, sheet_name):
     #if processed_list == []:
     #    print("error: processed list is empty")
     processed_list.sort()
- 
+
     return processed_list
 
 def main():
@@ -162,16 +162,16 @@ def main():
     basic I/O & function calls only
     """
     final = []
-    
+
     args: tuple[Path, str, str, str] = parse_args(sys.argv)
     if args is None:
         return None
     path, sheet_name, column_title, ending_cell = args
-    
+
     final = process_and_sort(path, column_title, ending_cell, sheet_name)
-    
+
     print_output(final)
-    
-  
+
+
 if __name__ == "__main__":
     main()
