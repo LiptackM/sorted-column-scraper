@@ -110,7 +110,7 @@ def remove_before_and_after(
         #make sure if None entered it is a NoneType
         back_target = None if back_target == 'None' else back_target
         front_target = None if front_target == 'None' else front_target
-        
+
         #entering the same value is undefined so return empty list
         #if front_target == back_target:
             #return []
@@ -126,7 +126,7 @@ def remove_before_and_after(
 
     except ValueError as value_error:
         print(value_error)
-        print(f"target not found in sheet")
+        print("target not found in sheet")
         return []  # target not found; return empty
 
 
@@ -172,6 +172,7 @@ def main():
 
     print_output(final)
 
+    return None
 
 if __name__ == "__main__":
     main()
