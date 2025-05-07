@@ -1,38 +1,45 @@
-
 r"""
-Gathers all the entries in a sheet, slices to get one or more consecutive columns,
-    and then sorts by value.
-    
- Usage: excel_column,py <full path to excel file> <"column title"> <"ending cell", use None if blank>'.
-    Most likely the last cell is blank, so "ending cell" should be None.
-    Use quote around Column title if more than one word to account for blank
-    
+Gathers all the entries in a sheet, slices to get one or more consecutive
+    columns,and then sorts by value.
+
+Usage: excel_column,py <full path to excel file> <"column title">
+    <"ending cell", use None if blank>'.  Most likely the last cell is blank,
+    so "ending cell" should be None.  Use quote around Column title if more
+    than one word to account for blank
+
 Args:
-    
+
     <path>  fully qualified path to excel file
     <"column title"> is the title of the column to sort.
-        Use quote around column title if more than one word to account for blank
+        Use quote around column title if more than one word to account for
+        blank
     <"ending cell">, use None if blank
 
 Returns: sorted list values, one on each line
 
 PS sample
-    PS \src> Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-    PS C:\Users\foo\src> venv\Scripts\Activate.ps1
-    (venv) PS C:\Users\foo\src> python excel_column_sorted.py my.xlsx "Blah" None
+    python excel_column_sorted.py my.xlsx "Blah" None
 
 Tests
     see \tests\test_excel_column_sorted.py
-    
+
 """
 
 import sys
-from openpyxl import load_workbook
 from pathlib import Path
 
+from openpyxl import load_workbook
+
+
 def parse_args(argv):
+    """
+    takes args and returns new variables in a function, so easily testable
+    with pylint
+    """
     if len(argv) < 5:
-        print('Usage: excel_column_sorted.py <full path to excel file> <"sheet name"> <"column title"> <"ending cell", use None if blank>')
+        print("Usage: excel_column_sorted.py" +
+              " <full path to excel file> <'sheet name'>" +
+              " <'column title'> <'ending cell', use None if blank>")
         return None
     initial_path = argv[1]
     sheet_name = argv[2]
@@ -43,6 +50,10 @@ def parse_args(argv):
 
 
 def print_output(items: list[any]) -> None:
+    """
+    separated out  printing to make main() just initial calls and I/) to make
+    testable
+    """
     for item in items:
         print(f"{repr(item)} (type: {type(item).__name__})", end='\r\n')
 
@@ -69,24 +80,30 @@ def process_excel_columns_rw(filename, sheet_name):
             workbook.close()
             
             
-def remove_before_and_after(my_list, front_target: str, back_target: str) ->list:
+def remove_before_and_after(
+    my_list,
+    front_target: str,
+    back_target: str
+) -> list:
     """
     From a list composed from all cells in an excel sheet, removes
     everything before title of desired column, and then keeps everything
     else up to the ending cell.  Note that back_target is the next instance
     of that value in the list if there are multiples
-    
+
     Args:
-        my_list is all the cells in the sheet by column (eg, [A1, A2, A3, B1, B2, B3])
+        my_list is all the cells in the sheet by column (eg, [A1, A2, A3, B1,
+        B2, B3]).
         Front_target is the title of the column you wish to start at
         back_target is the cell after the last one you wish to keep,
             & is often blank which is noted as None
-            
+
     Return:  a trimmed list
-    
+
     Exceptions:
-    if non-existence of cell contents that created this list, prints a ValueException:
-      "'foo' is not in list" and then "target not found" and returns an empty list
+    if non-existence of cell contents that created this list, prints a
+    ValueException: "'foo' is not in list" and then "target not found" and
+    returns an empty list
     """
 
     try:
@@ -131,7 +148,8 @@ def process_and_sort(path, column_title, ending_cell, sheet_name):
         initial_output.append(value)
        
     #cut the list, then sort
-    processed_list = remove_before_and_after(initial_output, column_title, ending_cell)
+    processed_list = remove_before_and_after(
+        initial_output, column_title, ending_cell)
     #debug
     #if processed_list == []:
     #    print("error: processed list is empty")
@@ -140,9 +158,12 @@ def process_and_sort(path, column_title, ending_cell, sheet_name):
     return processed_list
 
 def main():
+    """
+    basic I/O & function calls only
+    """
     final = []
     
-    args: Tuple[Path, str, str, str] = parse_args(sys.argv)
+    args: tuple[Path, str, str, str] = parse_args(sys.argv)
     if args is None:
         return None
     path, sheet_name, column_title, ending_cell = args
