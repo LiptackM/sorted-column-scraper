@@ -12,7 +12,7 @@ This Python script extracts and sorts data from a specified column in an Excel s
 
 ## Requirements
 
-- Python 3.8+
+- Python 3.8+ (CI linting in GitHub actions are setup for 3.12)
 - `openpyxl`
 - `pytest` (for testing)
 
