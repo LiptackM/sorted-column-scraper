@@ -30,6 +30,7 @@ jobs:
         pip install -r requirements.txt
     
     - name: Run Pylint
+      run: |
         PYTHONPATH=${{ github.workspace }} pylint sorted_column_scraper/column_sorter.py 
         PYTHONPATH=${{ github.workspace }} pylint tests/*.py $PYLINT_TEST_OPTIONS
       env:
