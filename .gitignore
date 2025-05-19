@@ -1,0 +1,17 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
+# Virtual environment
+excel_column_sorted_env/
+
+# VSCode or other editor settings
+.vscode/
+
+#test infra
+.coverage
+.pytest_cache/
+
+# Environment variable files
+.env
+
+# Distribution / packaging
