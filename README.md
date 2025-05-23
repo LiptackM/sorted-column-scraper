@@ -1,4 +1,5 @@
 # sorted-column-scraper
+
 This Python script extracts and sorts data from a specified column in an Excel spreadsheet. It's particularly useful for processing Excel files where data is organized in columns and you want to isolate and sort values from a specific section.  Uses openpyxl, so less overheard than other methods.
 
 ## Features
@@ -10,7 +11,8 @@ This Python script extracts and sorts data from a specified column in an Excel s
 - CLI support for direct usage
 
 ## Testing
-- Full unit test suite using ` pytest -rs tests/test_excel_column_sorted.py`
+
+- Full unit test suite using `pytest -rs tests/test_excel_column_sorted.py`
 - github/workflows pylint for all binaries on PR
 
 ## Requirements
