@@ -1,11 +1,11 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 
-# Virtual environment
+# Virtual environments
 excel_column_sorted_env/
 venv/
-venv-vsc/
 venv-wsl/
+
 
 # VSCode or other editor settings
 .vscode/
