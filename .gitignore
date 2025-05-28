@@ -5,6 +5,7 @@ __pycache__/
 excel_column_sorted_env/
 venv/
 venv-wsl/
+venv-win/
 
 
 # VSCode or other editor settings
